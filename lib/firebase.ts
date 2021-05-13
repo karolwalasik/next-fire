@@ -19,5 +19,32 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+// Firestore exports 
 export const firestore = firebase.firestore();
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+export const fromMillis = firebase.firestore.Timestamp.fromMillis;
+export const increment = firebase.firestore.FieldValue.increment;
+
 export const storage = firebase.storage();
+// dzieki temu mozna sie dowiedziec jaki jest status uploadu plikow
+export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED
+
+//pobiera dokument uzytkownika przez username
+export async function getUserWithUsername(username) {
+  const usersRef = firestore.collection("users");
+  const query = usersRef.where("username", "==", username).limit(1);
+  const userDoc = (await query.get()).docs[0];
+  return userDoc;
+}
+
+//konwertuje dokument firestore na json
+export function postToJSON(doc) {
+  const data = doc.data();
+
+  return {
+    ...data,
+    createdAt: data.createdAt.toMillis(),
+    updatedAt: data.updatedAt.toMillis(),
+  };
+}
