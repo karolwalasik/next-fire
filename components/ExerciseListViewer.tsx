@@ -24,7 +24,7 @@ function ExerciseItem({ exercise}: IExerciseItemProps) {
                     <a>{exercise.title}</a>
                 </h2>
             </Link>
-            <button onClick={()=>setIsExpanded(!isExpanded)}>expand</button>
+            <button onClick={()=>setIsExpanded(!isExpanded)}>{isExpanded ? 'collapse':'expand'}</button>
             {isExpanded && <div><ReactMarkdown>{exercise.content}</ReactMarkdown></div>}
 
         </div>

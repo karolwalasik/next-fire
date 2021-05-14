@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { UserContext } from "../lib/context";
 import { useContext } from "react";
+import {auth} from "../lib/firebase";
 
 export default function Navbar() {
   const { user, username } = useContext(UserContext);
@@ -45,6 +46,12 @@ export default function Navbar() {
             </Link>
           </li>
         )}
+        {
+          username && <li>
+            <button onClick={() => auth.signOut()}>sign out</button>
+          </li>
+        }
+
       </ul>
     </nav>
   );
