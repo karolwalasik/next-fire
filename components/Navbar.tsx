@@ -32,6 +32,9 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
+              <button onClick={() => auth.signOut()}>sign out</button>
+            </li>
+            <li>
               <Link href={`/${username}`}>
                 <img src={user?.photoURL} />
               </Link>
@@ -46,11 +49,7 @@ export default function Navbar() {
             </Link>
           </li>
         )}
-        {
-          username && <li>
-            <button onClick={() => auth.signOut()}>sign out</button>
-          </li>
-        }
+
 
       </ul>
     </nav>
