@@ -17,7 +17,17 @@ export default function Navbar() {
           <>
             <li>
               <Link href="/admin">
-                <button>write posts</button>
+                <button>Write posts</button>
+              </Link>
+            </li>
+            <li>
+              <Link href={'/admin/exercises'}>
+                <button>My exercises</button>
+              </Link>
+            </li>
+            <li>
+              <Link href={'/admin/messages'}>
+                <button>Messages</button>
               </Link>
             </li>
             <li>
@@ -25,6 +35,7 @@ export default function Navbar() {
                 <img src={user?.photoURL} />
               </Link>
             </li>
+
           </>
         )}
         {!username && (

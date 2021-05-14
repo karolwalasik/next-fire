@@ -33,7 +33,7 @@ function Home(props) {
     const last = posts[posts.length - 1];
 
     const cursor =
-      typeof last.createdAt === "number"
+      typeof last?.createdAt === "number"
         ? fromMillis(last.createdAt)
         : last.createdAt;
 
@@ -46,7 +46,7 @@ function Home(props) {
 
     const newPosts = (await query.get()).docs.map((doc) => doc.data());
 
-    setPosts(posts.concat());
+    setPosts(posts.concat(newPosts));
     setLoading(false);
 
     if (newPosts.length < LIMIT) {
@@ -56,7 +56,7 @@ function Home(props) {
 
   return (
     <main>
-      <PostFeed posts={posts} admin />
+      <PostFeed posts={posts} admin={false} />
 
       {!loading && !postsEnd && (
         <button onClick={getMorePosts}>Load more</button>

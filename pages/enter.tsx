@@ -3,6 +3,7 @@ import { auth } from "../lib/firebase";
 import { useContext, useState, useEffect, useCallback } from "react";
 import { UserContext } from "../lib/context";
 import { debounce } from "lodash";
+import Loader from "../components/Loader";
 
 export default function EnterPage({}) {
   const { user, username } = useContext(UserContext);
@@ -83,7 +84,9 @@ function UsernameForm() {
     e.preventDefault();
     try {
       //stoworzenie referencji do obu dokumentow
+      await firestore.collection('users').add({uid:user.uid})
       const userDoc = firestore.doc(`users/${user.uid}`);
+      console.log(userDoc)
       const usernameDoc = firestore.doc(`usernames/${formValue}`);
       //zapis obu do firesotre
       const batch = firestore.batch();

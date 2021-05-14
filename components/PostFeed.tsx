@@ -27,9 +27,11 @@ function PostItem({ post, admin = false }: IPostItemProps) {
       <Link href={`/${post.username}/${post.slug}`}>
         <h2>
           <a>{post.title}</a>
-          {admin}
         </h2>
       </Link>
+        {admin && <Link href={`/admin/${post.slug}`}>
+            <button>edit</button>
+        </Link>}
 
       <footer>
         <span>
