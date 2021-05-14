@@ -24,6 +24,7 @@ export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export const firestore = firebase.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 export const fromMillis = firebase.firestore.Timestamp.fromMillis;
+//mozna zupdatowac wartosc nie znajac aktualnej wartosci na serwerze
 export const increment = firebase.firestore.FieldValue.increment;
 
 export const storage = firebase.storage();
