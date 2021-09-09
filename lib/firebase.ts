@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import kebabCase from "lodash.kebabcase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDNBsIZfcd9ikZfePiyRSBJZjaoSXQlY2Q",
@@ -16,6 +17,14 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
+//for development
+if (process.browser) {
+  //@ts-ignore
+  window.firebase = firebase;
+}
+
+
 
 export const auth = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -39,6 +48,12 @@ export async function getUserWithUsername(username) {
   return userDoc;
 }
 
+export async function getUserRole() {
+  if(!auth.currentUser?.uid) return
+  const usersRef = (await firestore.doc(`users/${auth.currentUser.uid}`).get()).data()?.role;
+  return usersRef
+}
+
 //konwertuje dokument firestore na json
 export function postToJSON(doc) {
   const data = doc.data();
@@ -49,3 +64,27 @@ export function postToJSON(doc) {
     updatedAt: data.updatedAt.toMillis(),
   };
 }
+
+export const addActivity = async (uid, activity) => {
+
+  //
+  // const uid = auth.currentUser.uid;
+  const ref = firestore.collection("users").doc(uid).collection("activities");
+  // const data = {
+  //   title,
+  //   slug,
+  //   uid,
+  //   username,
+  //   published: false,
+  //   content: "hello",
+  //   createdAt: serverTimestamp(),
+  //   updatedAt: serverTimestamp(),
+  //   heartCount: 0,
+  // };
+  const slug = encodeURI(kebabCase(`${activity.name}-${activity.date}`));
+  await ref.doc(slug).set(activity);
+  //
+  // console.log('add')
+  // const ref = firebase.database().ref().child(`users/${uid}/activities`);
+  // ref.push(activity);
+};

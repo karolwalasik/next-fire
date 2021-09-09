@@ -2,6 +2,7 @@ import Link from "next/link";
 import { UserContext } from "../lib/context";
 import { useContext } from "react";
 import {auth} from "../lib/firebase";
+import router, { useRouter } from "next/router";
 
 export default function Navbar() {
   const { user, username } = useContext(UserContext);
@@ -32,14 +33,17 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <button onClick={() => auth.signOut()}>sign out</button>
+              <button onClick={() => {
+                router.push('/');
+                setTimeout(()=>auth.signOut())
+                
+                }}>sign out</button>
             </li>
             <li>
               <Link href={`/${username}`}>
                 <img src={user?.photoURL} />
               </Link>
             </li>
-
           </>
         )}
         {!username && (
@@ -49,8 +53,6 @@ export default function Navbar() {
             </Link>
           </li>
         )}
-
-
       </ul>
     </nav>
   );
