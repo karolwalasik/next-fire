@@ -15,7 +15,7 @@ body {
   font-family: "Noto Sans", sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  margin-top: 50px;
+  /* margin-top: 50px; */
 }
 
 main {
@@ -360,4 +360,12 @@ svg.MuiSvgIcon-root {
 svg.MuiSvgIcon-root:hover {
   cursor: pointer;
   opacity: .5;
+}
+
+.personal-bests-list{
+  margin-top:20px;
+}
+
+.MuiAccordionSummary-content{
+  justify-content: space-between;
 }

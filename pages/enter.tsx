@@ -55,7 +55,7 @@ function SignInButton() {
 }
 
 function SignOutButton() {
-  return <button onClick={() => auth.signOut()}>Sign out</button>;
+  return <Button variant="contained" color="primary" onClick={() => auth.signOut()}>Sign out</Button>;
 }
 
 const useStyles = makeStyles((theme) => ({

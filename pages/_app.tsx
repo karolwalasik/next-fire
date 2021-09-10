@@ -7,12 +7,14 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, firestore} from '../lib/firebase'
 import {useUserData} from "../lib/hooks";
 import theme from '../lib/theme'
-import { ThemeProvider } from "@material-ui/core";
+import { CircularProgress, Grid, ThemeProvider } from "@material-ui/core";
 
 
 function MyApp({ Component, pageProps }) {
 
     const userData = useUserData()
+
+
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={userData}>

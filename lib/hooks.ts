@@ -29,7 +29,7 @@ export function useUserRole(){
 
     useEffect(()=>{
         getUserRole().then(result=>setUserRole(result))
-    },[])
+    },[auth.currentUser?.uid])
 
     return userRole
 }

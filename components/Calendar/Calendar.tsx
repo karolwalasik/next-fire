@@ -13,6 +13,7 @@ import { Paper, Snackbar } from '@material-ui/core';
 import {firestore,auth,increment} from '../../lib/firebase';
 import {useUserData} from "../../lib/hooks";
 import { SettingsApplications } from '@material-ui/icons';
+import { UserContext } from '../../lib/context';
 
 
 function Calendar(props){
@@ -65,7 +66,7 @@ function Calendar(props){
     /*** ADDING AN ACTIVITY ***/
     const [openSnackbar, setOpenSnackbar] = React.useState(false);
     const [snackbarMsg, setSnackbarMsg] = React.useState(null);
-    const userData = useUserData()
+    // const {userData, username} = React.useContext(UserContext)
 
     /*** ACTIVITY LIST ***/
     const [activities, setActivities] = useState([]);
