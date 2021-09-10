@@ -2,6 +2,7 @@ import React from 'react';
 import {auth, firestore} from '../../lib/firebase';
 import { useUserData } from '../../lib/hooks';
 import PersonalBestsListItem from '../PersonalBestsListItem';
+import styles from  './PersonalBestList.module.css'
 
 
 
@@ -32,7 +33,7 @@ function PersonalBestsList(){
 
     return <>
         {!!personalBestsList?.length && 
-        <div className="personal-bests-list">
+        <div className={styles.personalBestsList}>
             {personalBestsList.map(pb => <PersonalBestsListItem key={pb} name={pb}/>)}
         </div>}
     </>
