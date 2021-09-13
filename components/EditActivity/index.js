@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { firestore, auth } from '../../lib/firebase';
+import { usePrevious } from '../../lib/hooks';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -36,6 +37,12 @@ function EditActivity(props) {
     }
 
     const [newActivity, setNewActivity] = useState(defaultActivity);
+
+    const prevActivity = usePrevious({activity})
+
+    useEffect(()=>{if(prevActivity?.name !==activity.name){
+        setNewActivity(activity)
+    }},[activity])
 
     const handleChange = e => {
         const { name, value } = e.target

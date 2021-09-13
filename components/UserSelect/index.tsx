@@ -24,10 +24,10 @@ function UserSelect({activeUser,handleUserChange}){
 
     const retrieveUsersList = async () => {
         let ref = await firestore.collection(`users`).onSnapshot(snpashot=>{
-            const users = snpashot.docs.filter(snap=>(snap.data().role===Roles.CLIENT)).map(snap=>snap.data())
-            
-            setUsersList(users)
+            // let newUsers = []
 
+            const users = snpashot.docs.filter(snap=>(snap.data().role===Roles.CLIENT)).map(snap=>{ return {...snap.data(),id:snap.id}})
+            setUsersList(users)
         })
     };
 

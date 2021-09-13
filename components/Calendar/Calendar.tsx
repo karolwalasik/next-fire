@@ -51,6 +51,7 @@ function Calendar(props){
                 day,
                 month: currentMonthNum()
         });
+        setEditing(false)
         // Later refresh data
     };
 
@@ -69,7 +70,7 @@ function Calendar(props){
     // const {userData, username} = React.useContext(UserContext)
 
     /*** ACTIVITY LIST ***/
-    const [activities, setActivities] = useState([]);
+    const [activities, setActivities] = useState(()=>[]);
     const [loading, setLoading] = useState(true);
 
     const [editing, setEditing] = useState(false);
@@ -77,8 +78,10 @@ function Calendar(props){
     const [activityKey, setActivityKey] = useState(null);
 
     const editActivity = (activity, i) => {
-        // console.log(activity,i)
+        console.log(activity,i)
         // console.log('%c activities','font-size:24px',activities)
+        console.log(activity.data());
+        
         setActivityKey(i);
         setEditing(true); 
         setActivity(activity.data());
@@ -88,13 +91,13 @@ function Calendar(props){
     const retrieveData = async () => {
         //@ts-ignore
         let queryDate = `${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`;
+        console.log('%c activities','font-size: 24px',activities,selectedDay)
 
         let ref = await firestore.collection(`users/${auth.currentUser.uid}/activities`).onSnapshot(snpashot=>{
             const activities = snpashot.docs.filter(snap=>(snap.data().date===queryDate))
             //@ts-ignore
             setActivities(activities)
             setLoading(false)
-            
         })
 
         retrieveActiveDays()

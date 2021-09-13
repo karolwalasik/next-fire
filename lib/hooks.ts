@@ -1,6 +1,6 @@
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, firestore, getUserRole} from "./firebase";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 //custom hook to read auth record and user profile doc
 export function useUserData(){
@@ -33,3 +33,11 @@ export function useUserRole(){
 
     return userRole
 }
+
+export function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
