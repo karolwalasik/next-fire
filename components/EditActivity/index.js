@@ -57,15 +57,26 @@ function EditActivity(props) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(newActivity)
     setNewActivity({
       ...newActivity,
       [name]: value,
     });
   };
 
-  const handleSlider = (e) => {
-    const duration = e.target.getAttribute("aria-valuenow");
-    setNewActivity({ ...newActivity, duration: duration });
+
+
+
+  const handleSlider = (e,value,name) => {
+  
+    console.log(e,value,name)
+
+
+    setNewActivity({
+      ...newActivity,
+      [name]: parseInt(value),
+    });
+  
   };
 
   const isValid = newActivity.name === "";
@@ -79,7 +90,9 @@ function EditActivity(props) {
   // Add the activity to firebase via the API made in this app
   const handleSubmit = (action) => {
     if (authUser) {
-      updateActivity(auth.currentUser.uid, newActivity, activityKey);
+      updateActivity(props.authUser, newActivity, activityKey);
+
+      console.log(props.authUser,newActivity,activityKey)
       setEditing(false);
       // Show alert and hide after 3sec
       setOpenSnackbar(true);
@@ -135,14 +148,14 @@ function EditActivity(props) {
               min={10}
               max={120}
               name="duration"
-              onChange={handleSlider}
+              onChange={(e,val)=>handleSlider(e,val,'duration')}
               style={{ marginBottom: "20px" }}
             />
           </>
         )}
         {newActivity.type === 1 && (
           <>
-            <Typography id="reps" gutterBottom>
+            <Typography id="sets" gutterBottom>
               Sets
             </Typography>
             <Slider
@@ -154,7 +167,7 @@ function EditActivity(props) {
               min={1}
               max={8}
               name="sets"
-              onChange={handleSlider}
+              onChange={(e,val)=>handleSlider(e,val,'sets')}
               style={{ marginBottom: "20px" }}
             />
           </>
@@ -173,7 +186,7 @@ function EditActivity(props) {
               min={1}
               max={25}
               name="reps"
-              onChange={handleSlider}
+              onChange={(e,val)=>handleSlider(e,val,'reps')}
               style={{ marginBottom: "20px" }}
             />
           </>

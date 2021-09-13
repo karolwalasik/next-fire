@@ -25,7 +25,7 @@ function AddActivity(props) {
 
   const { authUser, firebase, selectedDay, setOpenSnackbar, setSnackbarMsg } =
     props;
-  const uid = auth.currentUser?.uid;
+  const uid = props.authUser
 
   // Set query date for updating database
   selectedDay.year = new Date().getFullYear();
@@ -42,6 +42,7 @@ function AddActivity(props) {
   };
 
   const [activity, setActivity] = useState(defaultActivity);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,14 +53,18 @@ function AddActivity(props) {
     });
   };
 
-  const handleSlider = (e) => {
-    const value = e.target.getAttribute("aria-valuenow");
-    console.log(value);
+
+
+  const handleSlider = (e,value,name) => {
+  
+    console.log(e,value,name)
+
 
     setActivity({
       ...activity,
-      [e.target.getAttribute("aria-labelledby")]: value,
+      [name]: parseInt(value),
     });
+  
   };
 
   const isValid = activity.name === "";
@@ -135,14 +140,14 @@ function AddActivity(props) {
               min={10}
               max={120}
               name="duration"
-              onChange={handleSlider}
+              onChange={(e,val)=>handleSlider(e,val,'duration')}
               style={{ marginBottom: "20px" }}
             />
           </>
         )}
         {activity.type === 1 && (
           <>
-            <Typography id="reps" gutterBottom>
+            <Typography id="sets" gutterBottom>
               Sets
             </Typography>
             <Slider
@@ -154,7 +159,7 @@ function AddActivity(props) {
               min={1}
               max={8}
               name="sets"
-              onChange={handleSlider}
+              onChange={(e,val)=>handleSlider(e,val,'sets')}
               style={{ marginBottom: "20px" }}
             />
           </>
@@ -173,7 +178,7 @@ function AddActivity(props) {
               min={1}
               max={25}
               name="reps"
-              onChange={handleSlider}
+              onChange={(e,val)=>handleSlider(e,val,'reps')}
               style={{ marginBottom: "20px" }}
             />
           </>

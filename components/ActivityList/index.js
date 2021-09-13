@@ -85,7 +85,7 @@ function ActivityList(props) {
 
   useEffect(() => {
     retrieveData();
-  }, [modalActivityId]);
+  }, [modalActivityId,props]);
 
   const handleComment = (e) => {
     setComment(e.target.value);
