@@ -92,8 +92,9 @@ function Calendar(props){
         //@ts-ignore
         let queryDate = `${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`;
         console.log('%c activities','font-size: 24px',activities,selectedDay)
+        console.log(props.authUser)
 
-        let ref = await firestore.collection(`users/${auth.currentUser.uid}/activities`).onSnapshot(snpashot=>{
+        let ref = await firestore.collection(`users/${props.authUser}/activities`).onSnapshot(snpashot=>{
             const activities = snpashot.docs.filter(snap=>(snap.data().date===queryDate))
             //@ts-ignore
             setActivities(activities)
@@ -106,7 +107,7 @@ function Calendar(props){
     };
 
     const retrieveActiveDays = async() => {
-        await firestore.collection(`users/${auth.currentUser.uid}/activities`).onSnapshot(snpashot=>{
+        await firestore.collection(`users/${props.authUser}/activities`).onSnapshot(snpashot=>{
             const arr = snpashot.docs.map(snap=> {
                 if(snap.data().date){
                  return snap.data().date.length===8 ? snap.data().date.slice(0,3): snap.data().date.slice(0,4)
@@ -132,7 +133,7 @@ function Calendar(props){
 
     React.useEffect(()=>{
         retrieveData()
-    },[selectedDay]);
+    },[selectedDay,props]);
 
     const [activeDays, setActiveDays] = useState([]);
 

@@ -14,12 +14,24 @@ import { Roles } from "../../enter";
 
 export default function AdminExercisePage({}) {
     const [activeUser,setActiveUser] = React.useState(null)
-
+    const [activeUserId,setActiveUserId] = React.useState(null)
     const handleChange = (event) => {
         setActiveUser(event.target.value);
       }; 
 
     const uid = auth.currentUser?.uid;
+
+    useEffect(()=>{
+        const getActive = async() =>{
+            const activeUserObject = await getUserWithUsername(activeUser) 
+            if(activeUserObject?.id){
+                setActiveUserId(activeUserObject.id)
+            }
+        } 
+        getActive();
+    },[activeUser])
+
+     
 
     async function copyCollection() {
         console.log(activeUser)
@@ -67,7 +79,7 @@ export default function AdminExercisePage({}) {
             <MetaTags title="admin workout page" />
             <AuthCheck>
                 {userRole === Roles.TRAINER && <AssignSelect activeUser={activeUser} handleUserChange={handleChange} buttonText={'Save workout plan'} buttonAction={copyCollection}/>}
-                <Calendar authUser={auth.currentUser}/>
+                <Calendar authUser={activeUserId}/>
             </AuthCheck>
         </main>
     );

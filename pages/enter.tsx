@@ -17,7 +17,6 @@ export default function EnterPage({}) {
 
   return (
     <main>
-      <UsernameForm/>
       {user ? (
         !username ? (
           <UsernameForm />
