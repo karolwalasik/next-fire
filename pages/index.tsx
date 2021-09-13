@@ -27,7 +27,6 @@ function Home(props) {
   const [loading, setLoading] = useState(false);
   const [postsEnd, setPostsEnd] = useState(false);
 
-
   const getMorePosts = async () => {
     setLoading(true);
     const last = posts[posts.length - 1];

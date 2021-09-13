@@ -14,10 +14,9 @@ const firebaseConfig = {
   measurementId: "G-PCY8SH8M7R",
 };
 
-if (!firebase.apps.length) { 
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-
 
 //for development
 if (process.browser) {
@@ -25,12 +24,10 @@ if (process.browser) {
   window.firebase = firebase;
 }
 
-
-
 export const auth = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-// Firestore exports 
+// Firestore exports
 export const firestore = firebase.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 export const fromMillis = firebase.firestore.Timestamp.fromMillis;
@@ -39,7 +36,7 @@ export const increment = firebase.firestore.FieldValue.increment;
 
 export const storage = firebase.storage();
 // dzieki temu mozna sie dowiedziec jaki jest status uploadu plikow
-export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED
+export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;
 
 //pobiera dokument uzytkownika przez username
 export async function getUserWithUsername(username) {
@@ -50,9 +47,11 @@ export async function getUserWithUsername(username) {
 }
 
 export async function getUserRole() {
-  if(!auth.currentUser?.uid) return
-  const usersRef = (await firestore.doc(`users/${auth.currentUser.uid}`).get()).data()?.role;
-  return usersRef
+  if (!auth.currentUser?.uid) return;
+  const usersRef = (
+    await firestore.doc(`users/${auth.currentUser.uid}`).get()
+  ).data()?.role;
+  return usersRef;
 }
 
 //konwertuje dokument firestore na json
@@ -67,7 +66,6 @@ export function postToJSON(doc) {
 }
 
 export const addActivity = async (uid, activity) => {
-
   //
   // const uid = auth.currentUser.uid;
   const ref = firestore.collection("users").doc(uid).collection("activities");

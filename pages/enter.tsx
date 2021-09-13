@@ -4,12 +4,19 @@ import React, { useContext, useState, useEffect, useCallback } from "react";
 import { UserContext } from "../lib/context";
 import { debounce } from "lodash";
 import Loader from "../components/Loader";
-import { Button, Grid, MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 export enum Roles {
-  TRAINER = 'trainer',
-  CLIENT = 'client'
+  TRAINER = "trainer",
+  CLIENT = "client",
 }
 
 export default function EnterPage({}) {
@@ -54,7 +61,11 @@ function SignInButton() {
 }
 
 function SignOutButton() {
-  return <Button variant="contained" color="primary" onClick={() => auth.signOut()}>Sign out</Button>;
+  return (
+    <Button variant="contained" color="primary" onClick={() => auth.signOut()}>
+      Sign out
+    </Button>
+  );
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -115,7 +126,7 @@ function UsernameForm() {
     e.preventDefault();
     try {
       //stoworzenie referencji do obu dokumentow
-      await firestore.collection('users').add({uid:user.uid})
+      await firestore.collection("users").add({ uid: user.uid });
       const userDoc = firestore.doc(`users/${user.uid}`);
       const usernameDoc = firestore.doc(`usernames/${formValue}`);
       //zapis obu do firesotre
@@ -124,7 +135,7 @@ function UsernameForm() {
         username: formValue,
         photoUrl: user.photoURL || "",
         displayName: user.displayName || "",
-        role: role
+        role: role,
       });
       batch.set(usernameDoc, { uid: user.uid });
 
@@ -152,21 +163,19 @@ function UsernameForm() {
           />
           <FormControl className={classes.formControl}>
             <InputLabel id="role-label">Role</InputLabel>
-              <Select
-                labelId="role-label"
-                id="role-select"
-                value={role}
-                onChange={handleChange}
-                displayEmpty
-                className={classes.selectEmpty}
-                inputProps={{ 'aria-label': 'Without label' }}
-              >
-              
-                <MenuItem value={Roles.TRAINER}>{Roles.TRAINER}</MenuItem>
-                <MenuItem value={Roles.CLIENT}>{Roles.CLIENT}</MenuItem>
-          
+            <Select
+              labelId="role-label"
+              id="role-select"
+              value={role}
+              onChange={handleChange}
+              displayEmpty
+              className={classes.selectEmpty}
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value={Roles.TRAINER}>{Roles.TRAINER}</MenuItem>
+              <MenuItem value={Roles.CLIENT}>{Roles.CLIENT}</MenuItem>
             </Select>
-        </FormControl>
+          </FormControl>
           <button type="submit" className="btn-green" disabled={!isValid}>
             Choose{" "}
           </button>

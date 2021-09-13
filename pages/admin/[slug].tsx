@@ -78,7 +78,6 @@ function PostForm({ postRef, defaultValues, preview }) {
     toast.success("updated");
   };
 
-
   return (
     <form onSubmit={handleSubmit(updatePost)}>
       {preview && (

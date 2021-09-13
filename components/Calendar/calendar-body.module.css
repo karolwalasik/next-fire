@@ -1,7 +1,7 @@
 .calendarBodyDay {
-    width: 25px;
-    height: 25px;
-    display: inline-grid;
-    justify-content: center;
-    align-content: center;
+  width: 25px;
+  height: 25px;
+  display: inline-grid;
+  justify-content: center;
+  align-content: center;
 }

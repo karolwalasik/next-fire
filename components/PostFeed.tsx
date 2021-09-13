@@ -29,9 +29,11 @@ function PostItem({ post, admin = false }: IPostItemProps) {
           <a>{post.title}</a>
         </h2>
       </Link>
-        {admin && <Link href={`/admin/${post.slug}`}>
-            <button>edit</button>
-        </Link>}
+      {admin && (
+        <Link href={`/admin/${post.slug}`}>
+          <button>edit</button>
+        </Link>
+      )}
 
       <footer>
         <span>

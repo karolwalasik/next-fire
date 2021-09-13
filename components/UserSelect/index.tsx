@@ -6,50 +6,59 @@ import { Roles } from "../../pages/enter";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  }));
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
-function UserSelect({activeUser,handleUserChange}){
-    const classes = useStyles();
-    const [usersList,setUsersList] = React.useState([])
-    const [loading,setLoading] = React.useState(false)
-   
+function UserSelect({ activeUser, handleUserChange }) {
+  const classes = useStyles();
+  const [usersList, setUsersList] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
+  const retrieveUsersList = async () => {
+    let ref = await firestore.collection(`users`).onSnapshot((snpashot) => {
+      // let newUsers = []
 
-    const retrieveUsersList = async () => {
-        let ref = await firestore.collection(`users`).onSnapshot(snpashot=>{
-            // let newUsers = []
+      const users = snpashot.docs
+        .filter((snap) => snap.data().role === Roles.CLIENT)
+        .map((snap) => {
+          return { ...snap.data(), id: snap.id };
+        });
+      setUsersList(users);
+    });
+  };
 
-            const users = snpashot.docs.filter(snap=>(snap.data().role===Roles.CLIENT)).map(snap=>{ return {...snap.data(),id:snap.id}})
-            setUsersList(users)
-        })
-    };
+  React.useEffect(() => {
+    retrieveUsersList();
+  }, []);
 
-    React.useEffect(()=>{
-        retrieveUsersList()
-    },[])
+  console.log("Active", activeUser);
 
-    console.log('Active',activeUser)
-
-
-    return <div>
-        <FormControl className={classes.formControl}>
-            <InputLabel id="user-select-label">User</InputLabel>
-            <Select
-            labelId="user-select-label"
-            id="user-select"
-            value={activeUser || ''}
-            onChange={handleUserChange}
-            >
-                {usersList.length && usersList.map(user=><MenuItem key={user.username} value={user.username}>{user.username}</MenuItem>)}
-            </Select>
-        </FormControl></div>
+  return (
+    <div>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="user-select-label">User</InputLabel>
+        <Select
+          labelId="user-select-label"
+          id="user-select"
+          value={activeUser || ""}
+          onChange={handleUserChange}
+        >
+          {usersList.length &&
+            usersList.map((user) => (
+              <MenuItem key={user.username} value={user.username}>
+                {user.username}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    </div>
+  );
 }
 
-export default UserSelect
+export default UserSelect;
