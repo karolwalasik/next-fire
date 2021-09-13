@@ -35,6 +35,8 @@ function UserSelect({activeUser,handleUserChange}){
         retrieveUsersList()
     },[])
 
+    console.log('Active',activeUser)
+
 
     return <div>
         <FormControl className={classes.formControl}>

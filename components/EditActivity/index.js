@@ -33,7 +33,9 @@ function EditActivity(props) {
         name: activity.name,
         type: activity.type,
         duration: activity.duration,
-        date: activity.date
+        date: activity.date,
+        reps: activity.reps,
+        sets:activity.sets
     }
 
     const [newActivity, setNewActivity] = useState(defaultActivity);
@@ -110,7 +112,7 @@ function EditActivity(props) {
                         <MenuItem value={3}>Cycling</MenuItem>
                     </Select>
                 </div>
-                <Typography id="discrete-slider" gutterBottom>
+                {newActivity.type !== 1 && <><Typography id="discrete-slider" gutterBottom>
                     Duration
                 </Typography>
                 <Slider
@@ -124,7 +126,37 @@ function EditActivity(props) {
                     name="duration"
                     onChange={handleSlider}
                     style={{marginBottom: '20px'}}
-                />
+                /></>}
+                {newActivity.type===1 && <><Typography id="reps" gutterBottom>
+                    Sets
+                </Typography>
+                <Slider
+                    defaultValue={parseInt(newActivity.sets)}
+                    aria-labelledby="sets"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    marks
+                    min={1}
+                    max={8}
+                    name="sets"
+                    onChange={handleSlider}
+                    style={{marginBottom: '20px'}}
+                /></>}
+                {newActivity.type===1 && <><Typography id="reps" gutterBottom>
+                    Reps
+                </Typography>
+                <Slider
+                    defaultValue={parseInt(newActivity.reps)}
+                    aria-labelledby="reps"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    marks
+                    min={1}
+                    max={25}
+                    name="reps"
+                    onChange={handleSlider}
+                    style={{marginBottom: '20px'}}
+                /></>}
             </FormControl>
             <Button
                 type="submit"

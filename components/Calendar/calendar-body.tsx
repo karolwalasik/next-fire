@@ -9,6 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import styles from './calendar-body.module.css';
+
 const CalendarBody = props => {
 
     const { firstDayOfMonth, daysInMonth, currentDay, currentMonth, currentMonthNum, selectedDay, activeDays, setSelectedDay, actualMonth, weekdays } = props;
@@ -40,7 +42,7 @@ const CalendarBody = props => {
                 className={`week-day ${currDay} ${selectDay}`}
                 onClick={() => setSelectedDay(d)}
             >
-                <span className={activeDay}>{d}</span>
+                <span className={`${activeDay} ${styles.calendarBodyDay}`}>{d}</span>
             </TableCell>
         );
     }

@@ -30,6 +30,8 @@ function ActivityList(props) {
             duration: null,
             type: null,
             name: null,
+            reps: null,
+            sets: null
        };
 
         updateActivity(auth.currentUser.uid, emptyActivity, id);
@@ -64,14 +66,15 @@ function ActivityList(props) {
                                     <TableCell>Name</TableCell>
                                     <TableCell>Type</TableCell>
                                     <TableCell>Duration</TableCell>
-                                    <TableCell>reps</TableCell>
+                                    <TableCell>Sets</TableCell>
+                                    <TableCell>Reps</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                             {
                                 Object.values(activities).map((activity, i) => {
-                                    let {name, type, duration,reps} = activity.data();
+                                    let {name, type, duration,reps,sets} = activity.data();
                                     switch(type) {
                                         case 1:
                                             type = "Lifting weights";
@@ -90,6 +93,7 @@ function ActivityList(props) {
                                             <TableCell>{name}</TableCell>
                                             <TableCell>{type}</TableCell>
                                             <TableCell>{duration}</TableCell>
+                                            <TableCell>{sets}</TableCell>
                                             <TableCell>{reps}</TableCell>
                                             <TableCell>
                                                 <DeleteIcon 

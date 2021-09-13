@@ -29,6 +29,7 @@ function AddActivity(props) {
     // Set query date for updating database
     selectedDay.year = new Date().getFullYear();
     let queryDate = `${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`;
+   
 
     // Set default activity object
     const defaultActivity = {
@@ -36,10 +37,13 @@ function AddActivity(props) {
         type: 1,
         duration: 60,
         date: queryDate,
-        reps: 12
+        reps: 12,
+        sets: 4
     }
 
     const [activity, setActivity] = useState(defaultActivity);
+
+   
 
     const handleChange = e => {
         const { name, value } = e.target
@@ -61,7 +65,16 @@ function AddActivity(props) {
     // Add the activity to firebase via the API made in this app
     const handleSubmit = () => {
         if (authUser) {
-            addActivity(uid, activity);
+            let newActivity = {...activity}
+            if(activity.type ===1){
+                newActivity.duration = null;
+            }
+            if(activity.type!==1){
+                newActivity.reps = null;
+                newActivity.sets = null;
+            }
+            console.log(newActivity,activity)
+            addActivity(uid, newActivity);
             setActivity(defaultActivity);
             // Show notification
             setOpenSnackbar(true);
@@ -106,7 +119,7 @@ function AddActivity(props) {
                         <MenuItem value={3}>Cycling</MenuItem>
                     </Select>
                 </div>
-                <Typography id="duration" gutterBottom>
+                {activity.type !== 1 && <><Typography id="duration" gutterBottom>
                     Duration
                 </Typography>
                 <Slider
@@ -120,8 +133,23 @@ function AddActivity(props) {
                     name="duration"
                     onChange={handleSlider}
                     style={{marginBottom: '20px'}}
-                />
-                <Typography id="reps" gutterBottom>
+                /></>}
+                {activity.type===1 && <><Typography id="reps" gutterBottom>
+                    Sets
+                </Typography>
+                <Slider
+                    defaultValue={activity.sets}
+                    aria-labelledby="sets"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    marks
+                    min={1}
+                    max={8}
+                    name="sets"
+                    onChange={handleSlider}
+                    style={{marginBottom: '20px'}}
+                /></>}
+                {activity.type===1 && <><Typography id="reps" gutterBottom>
                     Reps
                 </Typography>
                 <Slider
@@ -135,7 +163,7 @@ function AddActivity(props) {
                     name="reps"
                     onChange={handleSlider}
                     style={{marginBottom: '20px'}}
-                />
+                /></>}
             </FormControl>
             <Button
                 type="submit"
