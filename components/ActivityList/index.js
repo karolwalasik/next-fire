@@ -19,6 +19,8 @@ import Fade from "@material-ui/core/Fade";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import theme from "../../lib/theme";
+import { Typography } from "@material-ui/core";
 
 function ActivityList(props) {
   const {
@@ -34,8 +36,10 @@ function ActivityList(props) {
     createStyles({
       modal: {
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "center",
+        overflow: "scroll",
+        top:20 
       },
       paper: {
         backgroundColor: theme.palette.background.paper,
@@ -229,6 +233,7 @@ function ActivityList(props) {
         BackdropProps={{
           timeout: 500,
         }}
+        style={{top:'15vh'}}
       >
         <Fade in={open}>
           <div className={classes.paper}>
@@ -236,21 +241,22 @@ function ActivityList(props) {
             {!!commentsForCurrentActivity?.length &&
               commentsForCurrentActivity.map((comment) => {
                 return (
-                  <Grid>
-                    <p>{comment.date}</p>
-                    <p>{comment.comment}</p>
-                    <p>{comment.username}</p>
+                  <Grid style={{marginBottom:10}}>
+                    <p style={{color: '#cacaca'}}>{comment.date}</p>
+                    <Typography style={{maxWidth:320}}>{comment.comment}</Typography>
+                    <p style={{color: '#0095a8',fontSize: 13}}>{comment.username}</p>
                   </Grid>
                 );
               })}
-            <p id="transition-modal-description">Add comment:</p>
+            <p style={{borderTop: '1px solid #cacaca',paddingTop:10}}id="transition-modal-description">Add comment:</p>
+            <Grid container alignItems="center"  >
             <TextareaAutosize
               aria-label="empty textarea"
               placeholder="Add comment"
               onChange={handleComment}
               value={comment}
             />
-            <Button onClick={addComment}>Add comment</Button>
+            <Button onClick={addComment}>Add comment</Button></Grid>
           </div>
         </Fade>
       </Modal>
