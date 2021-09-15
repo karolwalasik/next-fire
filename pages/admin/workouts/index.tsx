@@ -1,6 +1,7 @@
 import { CircularProgress, Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
 import AssignSelect from "../../../components/AssignSelect";
+import { CustomButton } from "../../../components/atoms/CustomButton/CustomButton";
 import AuthCheck from "../../../components/AuthCheck";
 import Calendar from "../../../components/Calendar/Calendar";
 import Dashboard from "../../../components/Dashborad/Dashboard";
@@ -95,13 +96,17 @@ export default function AdminExercisePage({}) {
     <main>
       <MetaTags title="admin workout page" />
       <AuthCheck>
+        
         {userRole === Roles.TRAINER && (
+          <>
+          <CustomButton label={'My preset'} onClick={()=>{setActiveUser(null);setActiveUserId(uid)}} />
           <AssignSelect
             activeUser={activeUser}
             handleUserChange={handleChange}
-            buttonText={"Save workout plan"}
+            buttonText={"Assing my preset to selected user"}
             buttonAction={copyCollection}
           />
+          </>
         )}
         <Calendar authUser={activeUserId} isOnClientPage={false} />
       </AuthCheck>
