@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { UserContext } from "../../lib/context";
 import { formatWithValidation } from "next/dist/next-server/lib/utils";
 import toast from "react-hot-toast";
+import { Typography } from "@material-ui/core";
 export default function AdminPostsPage({}) {
   return (
     <main>
@@ -82,9 +83,9 @@ function CreateNewPost() {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Article title"
         />
-        <p>
+        <Typography>
           <strong>Slug:</strong> {slug}
-        </p>
+        </Typography>
         <button type="submit" disabled={!isValid}>
           Create new post
         </button>
