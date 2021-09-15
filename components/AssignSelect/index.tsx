@@ -3,12 +3,19 @@ import React from "react";
 import UserSelect from "../UserSelect";
 import styles from "./AssignSelect.module.css";
 
+interface IAssignSelectProps {
+  activeUser: ()=>void,
+  handleUserChange:(e)=>void,
+  buttonText?:string,
+  buttonAction?:()=>void,
+}
+
 function AssignSelect({
   activeUser,
   handleUserChange,
   buttonText,
   buttonAction,
-}) {
+}:IAssignSelectProps) {
   return (
     <Paper className={styles.AssignSelect}>
       <Grid container>
@@ -16,7 +23,7 @@ function AssignSelect({
           activeUser={activeUser}
           handleUserChange={handleUserChange}
         />
-        <Button onClick={buttonAction}>{buttonText && buttonText}</Button>
+        {buttonText && buttonAction && <Button onClick={buttonAction}>{buttonText && buttonText}</Button>}
       </Grid>
     </Paper>
   );

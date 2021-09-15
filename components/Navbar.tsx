@@ -100,32 +100,35 @@ const Navbar = () => {
               <MenuItem onClick={() => handleClose("/")}>Feed</MenuItem>
 
               {userRole === Roles.TRAINER ? (
-                <>
+                [
                   <MenuItem onClick={() => handleClose("/admin")}>
                     Write posts
-                  </MenuItem>
+                  </MenuItem>,
                   <MenuItem onClick={() => handleClose("/admin/exercises")}>
                     My exercises
-                  </MenuItem>
+                  </MenuItem>,
                   <MenuItem onClick={() => handleClose("/admin/messages")}>
                     Messages
-                  </MenuItem>
+                  </MenuItem>,
                   <MenuItem onClick={() => handleClose("/admin/workouts")}>
                     Workouts
+                  </MenuItem>,
+                  <MenuItem onClick={() => handleClose("/admin/clients-bests")}>
+                    Clients bests
                   </MenuItem>
-                </>
+                ]
               ) : (
-                <>
+                [
                   <MenuItem
                     onClick={() => handleClose("/client/personal-bests")}
                   >
                     Personal bests
-                  </MenuItem>
+                  </MenuItem>,
                   <MenuItem onClick={() => handleClose("/client/workouts")}>
                     Workouts
                   </MenuItem>
-                </>
-              )}
+                ]
+              )} 
             </Menu>
             <Typography
               variant="h6"

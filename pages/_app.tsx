@@ -12,6 +12,14 @@ import { CircularProgress, Grid, ThemeProvider } from "@material-ui/core";
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
 
+
+  React.useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={userData}>

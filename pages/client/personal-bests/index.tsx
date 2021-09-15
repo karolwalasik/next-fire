@@ -1,4 +1,4 @@
-import { Button, Container, Grid, InputAdornment } from "@material-ui/core";
+import { Button, Container, Grid, InputAdornment, Typography } from "@material-ui/core";
 import * as React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -81,7 +81,7 @@ function PersonalBestsPage() {
 
   return (
     <Container maxWidth="lg">
-      <p style={{ fontSize: 20, margin: "5px 0px 0" }}>Add new exercise</p>
+      <Typography style={{ fontSize: 20, margin: "5px 0px 0" }}>Add new exercise</Typography>
       <form
         className={`${classes.root} ${classes.form}`}
         noValidate

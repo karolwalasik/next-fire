@@ -47,7 +47,7 @@ const updatePersonalBest = async (name, result) => {
   });
 };
 
-function PersonalBestsDetails({ exerciseName, expanded }) {
+function PersonalBestsDetails({ exerciseName, expanded,clientId=null }) {
   const [personalBestsDetails, setPersonalBestsDetails] = React.useState([]);
   const [newResult, setNewResult] = React.useState("");
   const { user } = useUserData();
@@ -98,7 +98,7 @@ function PersonalBestsDetails({ exerciseName, expanded }) {
       return;
     }
     let ref = await firestore
-      .doc(`users/${user.uid}/personalBests/${exerciseName}`)
+      .doc(`users/${clientId ?? user.uid}/personalBests/${exerciseName}`)
       .onSnapshot((snapshot) => {
         console.log(snapshot.data()?.results);
         if (snapshot.data()?.results) {
@@ -127,12 +127,13 @@ function PersonalBestsDetails({ exerciseName, expanded }) {
     <>
       {!!personalBestsDetails?.length && (
         <TableContainer component={Paper}>
-          <p style={{ marginLeft: 20 }}>Add new score</p>
+          {!clientId && <><p style={{ marginLeft: 20 }}>Add new score</p>
           <Grid
             container
             direction="row"
-            justifyContent="space-around"
+            justifyContent="space-between"
             alignItems="center"
+            style={{paddingRight:20}}
           >
             <TextField
               value={newResult}
@@ -148,7 +149,7 @@ function PersonalBestsDetails({ exerciseName, expanded }) {
             >
               Add
             </Button>
-          </Grid>
+          </Grid></>}
           <Table className={classes.table}>
             {createTableHead(personalBestsDetails)}
             {createTableBody(personalBestsDetails)}

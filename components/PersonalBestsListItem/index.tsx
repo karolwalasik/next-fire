@@ -10,7 +10,7 @@ import PersonalBestsDetails from "../PersonalBestsDetails";
 import { auth, firestore } from "../../lib/firebase";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-function PersonalBestsListItem({ name }) {
+function PersonalBestsListItem({ name,clientId=null }) {
   const [isExpanded, setExpanded] = React.useState(false);
 
   const removePersonalBest = async (name) => {
@@ -34,10 +34,10 @@ function PersonalBestsListItem({ name }) {
           style={{ justifyContent: "space-between" }}
         >
           <Typography>{name}</Typography>
-          <DeleteIcon onClick={() => removePersonalBest(name)} />
+          {!clientId && <DeleteIcon onClick={() => removePersonalBest(name)} />}
         </AccordionSummary>
         <AccordionDetails>
-          <PersonalBestsDetails exerciseName={name} expanded={isExpanded} />
+          <PersonalBestsDetails exerciseName={name} expanded={isExpanded} clientId={clientId}/>
         </AccordionDetails>
       </Accordion>
     </>
