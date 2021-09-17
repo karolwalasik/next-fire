@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const addPersonalBest = async (name, result, setError) => {
+const addPersonalBest = async (name:string, result:string, setError:(errorMsg:string)=>void) => {
   if (!name || !result) {
     setError("Fill every cell");
     return;

@@ -21,6 +21,10 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import theme from "../../lib/theme";
 import { Typography } from "@material-ui/core";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import firebase from "firebase";
+import LinkIcon from '@material-ui/icons/Link';
+import router from "next/router";
 
 function ActivityList(props) {
   const {
@@ -56,6 +60,8 @@ function ActivityList(props) {
   const [comment, setComment] = React.useState("");
   const [commentsForCurrentActivity, setCommentsForCurrentActivity] =
     React.useState([]);
+
+  
 
   const retrieveData = async () => {
     console.log("POBIERANIE KOMENTOW");
@@ -140,6 +146,7 @@ function ActivityList(props) {
       name: null,
       reps: null,
       sets: null,
+      slug: null
     };
 
     updateActivity(auth.currentUser.uid, emptyActivity, id);
@@ -177,7 +184,7 @@ function ActivityList(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.values(activities).map((activity, i) => {
+              {Object.values(activities).map((activity:any, i) => {
                 let { name, type, duration, reps, sets } = activity.data();
                 switch (type) {
                   case 1:
@@ -212,7 +219,8 @@ function ActivityList(props) {
                           onClick={(e) => editActivity(activity, activity.id)}
                           style={{ marginLeft: "20px" }}
                         />
-                        <CommentIcon onClick={(e) => handleOpen(activity.id)} />
+                        <CommentIcon onClick={(e) => handleOpen(activity.id)} style={{ marginLeft: "20px" }}/>
+                        {activity.slug && <LinkIcon onClick={()=>router.push(`/admin/exercises/${activity.slug}`)}/>}
                       </TableCell>
                     )}
                   </TableRow>
@@ -244,7 +252,9 @@ function ActivityList(props) {
                   <Grid style={{marginBottom:10}}>
                     <p style={{color: '#cacaca'}}>{comment.date}</p>
                     <Typography style={{maxWidth:320}}>{comment.comment}</Typography>
-                    <p style={{color: '#0095a8',fontSize: 13}}>{comment.username}</p>
+                    <Typography color={"textSecondary"} 
+                    // style={{color: '#0095a8',fontSize: 13}}
+                    >{comment.username}</Typography>
                   </Grid>
                 );
               })}

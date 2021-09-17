@@ -4,7 +4,7 @@ import UserSelect from "../UserSelect";
 import styles from "./AssignSelect.module.css";
 
 interface IAssignSelectProps {
-  activeUser: ()=>void,
+  activeUser: string,
   handleUserChange:(e)=>void,
   buttonText?:string,
   buttonAction?:()=>void,

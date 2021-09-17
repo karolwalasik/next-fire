@@ -7,18 +7,24 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "../lib/firebase";
 import { useUserData } from "../lib/hooks";
 import theme from "../lib/theme";
-import { CircularProgress, Grid, ThemeProvider } from "@material-ui/core";
+import { CircularProgress, createTheme, Grid, ThemeProvider, useMediaQuery } from "@material-ui/core";
+import darkTheme from "../lib/darkTheme";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
 
 
-  React.useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  // const theme = React.useMemo(
+  //   () =>
+  //     createTheme({
+  //       palette: {
+  //         type: prefersDarkMode ? 'dark' : 'light',
+  //       },
+  //     }),
+  //   [prefersDarkMode],
+  // );
 
   return (
     <ThemeProvider theme={theme}>

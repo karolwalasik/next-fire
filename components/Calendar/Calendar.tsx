@@ -9,11 +9,12 @@ import AddActivity from "../AddActivity/AddActivity";
 import ActivityList from "../ActivityList";
 import EditActivity from "../EditActivity";
 
-import { Paper, Snackbar } from "@material-ui/core";
+import { Paper, Snackbar, Typography } from "@material-ui/core";
 import { firestore, auth, increment } from "../../lib/firebase";
 import { useUserData } from "../../lib/hooks";
 import { SettingsApplications } from "@material-ui/icons";
 import { UserContext } from "../../lib/context";
+import ExercisePicker from "../ExercisePicker";
 
 function Calendar(props) {
   moment.locale("pl");
@@ -68,7 +69,7 @@ function Calendar(props) {
   // const {userData, username} = React.useContext(UserContext)
 
   /*** ACTIVITY LIST ***/
-  const [activities, setActivities] = useState(() => []);
+  const [activities, setActivities] = useState<Array<any>>(() => []);
   const [loading, setLoading] = useState(true);
 
   const [editing, setEditing] = useState(false);
@@ -146,6 +147,7 @@ function Calendar(props) {
   }, [selectedDay, props]);
 
   const [activeDays, setActiveDays] = useState([]);
+  const [currentExercise, setCurrentExercise] = useState('')
 
   return (
     <Grid container spacing={3}>
@@ -174,6 +176,8 @@ function Calendar(props) {
       {!props.isOnClientPage && (
         <Grid item xs={12} md={4} lg={3}>
           <Paper className="paper">
+            <Typography>Select exercise from library</Typography>
+            <ExercisePicker setCurrentExercise={setCurrentExercise} currentExercise={currentExercise}/>
             {editing ? (
               <>
                 <h3>
@@ -199,6 +203,7 @@ function Calendar(props) {
                   authUser={props.authUser}
                   setOpenSnackbar={setOpenSnackbar}
                   setSnackbarMsg={setSnackbarMsg}
+                  pickedExercise={currentExercise}
                 />
               </>
             )}

@@ -5,13 +5,14 @@ import { firestore, getUserWithUsername } from "../../../lib/firebase";
 
 
 function ClientBests(){
-    const [activeUser, setActiveUser] = React.useState(null);
-    const [activeUserId, setActiveUserId] = React.useState(null);
-    const [personalBestsList, setPersonalBestsList] = React.useState([]);
+    const [activeUser, setActiveUser] = React.useState<string | null>(null);
+    const [activeUserId, setActiveUserId] = React.useState<string | null>(null);
+    const [personalBestsList, setPersonalBestsList] = React.useState<string[]>([]);
 
     const handleChange = (event) => {
       setActiveUser(event.target.value);
     };
+    
 
     const retrieveData = async (id) => {
        

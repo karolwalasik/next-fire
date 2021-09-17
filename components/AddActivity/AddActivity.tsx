@@ -39,20 +39,47 @@ function AddActivity(props) {
     date: queryDate,
     reps: 12,
     sets: 4,
+    slug: ""
   };
 
   const [activity, setActivity] = useState(defaultActivity);
+  const [inputError,setInputError] = useState('')
   
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setActivity({
-      ...activity,
-      date: queryDate,
-      [name]: value,
-    });
-  };
+    if(props.pickedExercise && name==='name'){
+      
+      setInputError('Predefined Exercise Selected')
+      setActivity({
+        ...activity,
+        date: queryDate,
+        name: props.pickedExercise,
+      });
+    }else{
+      setActivity({
+        ...activity,
+        date: queryDate,
+        [name]: value,
+      });
+    };
+    }
+    
+  
+    
 
+  React.useEffect(() => {
+    if(props.pickedExercise){
+      setActivity({
+        ...activity,
+        date: queryDate,
+        name: props.pickedExercise,
+      });
+    }else{
+      setInputError('')
+      setActivity({...activity,name:''})
+    }
+  }, [props.pickedExercise])
 
 
   const handleSlider = (e,value,name) => {
@@ -105,10 +132,11 @@ function AddActivity(props) {
           required
           fullWidth
           label="Activity name"
-          value={activity.name}
+          value={props.pickedExercise.length ? props.pickedExercise :  activity.name}
           name="name"
           onChange={handleChange}
         />
+        {inputError && <Typography color={"error"}>{inputError}</Typography>}
         <div style={{ marginTop: "20px", marginBottom: "30px" }}>
           <Typography id="discrete-slider" gutterBottom>
             Type

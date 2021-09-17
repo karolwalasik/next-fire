@@ -18,6 +18,9 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    text:{
+      secondary: '#0095a8'
+    },
     background: {
       default: "#fff",
     },
@@ -30,6 +33,9 @@ const theme = createTheme({
       'Roboto',
       'Arial'
     ].join(','),
+  },
+  shape:{
+    borderRadius: 4
   },
   overrides:{
     MuiPaper:{
