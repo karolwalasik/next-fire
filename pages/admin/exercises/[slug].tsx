@@ -1,7 +1,7 @@
 import styles from "@styles/Admin.module.css";
 import AuthCheck from "../../../components/AuthCheck";
 import { firestore, auth, serverTimestamp } from "../../../lib/firebase";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import ImageUploader from "../../../components/ImageUploader";
+import { Button, Grid, TextareaAutosize } from "@material-ui/core";
 
 export default function AdminExerciseEdit({}) {
   return (
@@ -46,9 +47,9 @@ function ExerciseManager() {
           </section>
           <aside>
             <h3>Tools</h3>
-            <button onClick={() => setPreview(!preview)}>
+            <Button color={"primary"} variant={"contained"} onClick={() => setPreview(!preview)}>
               {preview ? "Edit" : "Preview"}
-            </button>
+            </Button>
           </aside>
         </>
       )}
@@ -84,18 +85,26 @@ function ExerciseForm({ exerciseRef, defaultValues, preview }) {
 
       <div style={preview ? { display: "none" } : { display: "block" }}>
         <ImageUploader />
-        <textarea
+        <Grid container spacing={3} alignItems={"center"}>
+        <Grid item xs={6}>
+        <TextareaAutosize
+          minRows={3}
+          style={{width:'100%'}}
           name="content"
           {...register("content", {
             maxLength: { value: 20000, message: "too long" },
             minLength: { value: 5, message: "too short" },
             required: { value: true, message: "no content" },
           })}
-        ></textarea>
+        ></TextareaAutosize>
         {errors?.content && <p>{errors.content.message}</p>}
-        <button type="submit" disabled={!isDirty || !isValid}>
+        </Grid>
+        <Grid item xs={6}>
+        <Button variant={"contained"} type="submit" disabled={!isDirty || !isValid}>
           Save
-        </button>
+        </Button>
+        </Grid>
+        </Grid>
       </div>
     </form>
   );

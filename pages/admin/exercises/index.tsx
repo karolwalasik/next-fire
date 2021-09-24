@@ -10,6 +10,7 @@ import { UserContext } from "../../../lib/context";
 import { formatWithValidation } from "next/dist/next-server/lib/utils";
 import toast from "react-hot-toast";
 import ExerciseListViewer from "../../../components/ExerciseListViewer";
+import { Button } from "@material-ui/core";
 export default function AdminExercisePage({}) {
   return (
     <main>
@@ -83,9 +84,9 @@ function CreateNewExercise() {
         <p>
           <strong>Slug:</strong> {slug}
         </p>
-        <button type="submit" disabled={!isValid}>
+        <Button color={"primary"} variant={"contained"} type="submit" disabled={!isValid}>
           Create new exercise
-        </button>
+        </Button>
       </form>
     </div>
   );

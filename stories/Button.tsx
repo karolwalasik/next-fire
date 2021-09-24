@@ -15,6 +15,8 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: () => void;
+  primary?:boolean;
+  size?:string
 }
 
 

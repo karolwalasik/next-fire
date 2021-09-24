@@ -1,7 +1,7 @@
 import styles from "@styles/Admin.module.css";
 import AuthCheck from "../../components/AuthCheck";
 import { firestore, auth, serverTimestamp } from "../../lib/firebase";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import ImageUploader from "../../components/ImageUploader";
+import { Button } from "@material-ui/core";
 
 export default function AdminPostEdit({}) {
   return (
@@ -46,11 +47,11 @@ function PostManager() {
           </section>
           <aside>
             <h3>Tools</h3>
-            <button onClick={() => setPreview(!preview)}>
+            <Button color={"primary"} variant={'outlined'} onClick={() => setPreview(!preview)}>
               {preview ? "Edit" : "Preview"}
-            </button>
+            </Button>
             <Link href={`/${post.username}/${post.slug}`}>
-              <button>Live view</button>
+              <Button color={"primary"} variant={'outlined'}>Live view</Button>
             </Link>
           </aside>
         </>
@@ -98,12 +99,12 @@ function PostForm({ postRef, defaultValues, preview }) {
         ></textarea>
         {errors?.content && <p>{errors.content.message}</p>}
         <fieldset>
-          <input type="checkbox" name="published" {...register("published")} />
-          <label>Published</label>
+          <input type="checkbox" id="published"name="published" {...register("published")} style={{display:'inline-block',width:'unset'}}/>
+          <label htmlFor="published">Published</label>
         </fieldset>
-        <button type="submit" disabled={!isDirty || !isValid}>
+        <Button variant={"contained"} type="submit" disabled={!isDirty || !isValid}>
           Save
-        </button>
+        </Button>
       </div>
     </form>
   );

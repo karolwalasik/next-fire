@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { is } from "@babel/types";
+import { Button } from "@material-ui/core";
 export default function ExerciseListViewer({ exercises }) {
   return exercises
     ? exercises.map((exercise) => (
@@ -24,9 +25,9 @@ function ExerciseItem({ exercise }: IExerciseItemProps) {
           <a>{exercise.title}</a>
         </h2>
       </Link>
-      <button onClick={() => setIsExpanded(!isExpanded)}>
+      <Button variant={"contained"} onClick={() => setIsExpanded(!isExpanded)}>
         {isExpanded ? "collapse" : "expand"}
-      </button>
+      </Button>
       {isExpanded && (
         <div>
           <ReactMarkdown>{exercise.content}</ReactMarkdown>

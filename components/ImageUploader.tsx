@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { auth, storage, STATE_CHANGED } from "../lib/firebase";
 import Loader from "./Loader";
@@ -43,6 +44,7 @@ export default function ImageUploader() {
       {uploading && <h3>{progress}%</h3>}
       {!uploading && (
         <>
+        <Button color={"secondary"} variant={"outlined"} style={{marginBottom: 20}}>
           <label>
             upload img
             <input
@@ -51,6 +53,7 @@ export default function ImageUploader() {
               onChange={uploadFile}
             />
           </label>
+          </Button>
         </>
       )}
       {downloadURL && <code>{`![alt](${downloadURL})`}</code>}
