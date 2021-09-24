@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { NavigationMap } from "./maps/NavigationMap";
 import { useUserRole } from "../lib/hooks";
 import { Roles } from "../pages/enter";
+import {auth} from "../lib/firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -99,6 +100,7 @@ const Navbar = () => {
             >
               <MenuItem onClick={() => handleClose("/")}>Feed</MenuItem>
 
+
               {userRole === Roles.TRAINER ? (
                 [
                   <MenuItem onClick={() => handleClose("/admin")}>
@@ -131,7 +133,8 @@ const Navbar = () => {
                         Messages
                     </MenuItem>,
                 ]
-              )} 
+              )}
+                <MenuItem onClick={() => {handleClose("/");setTimeout(()=>{auth.signOut()})}}>SignOut</MenuItem>
             </Menu>
             <Typography
               variant="h6"
