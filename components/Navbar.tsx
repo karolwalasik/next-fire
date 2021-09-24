@@ -126,7 +126,10 @@ const Navbar = () => {
                   </MenuItem>,
                   <MenuItem onClick={() => handleClose("/client/workouts")}>
                     Workouts
-                  </MenuItem>
+                  </MenuItem>,
+                    <MenuItem onClick={() => handleClose("/admin/messages")}>
+                        Messages
+                    </MenuItem>,
                 ]
               )} 
             </Menu>
